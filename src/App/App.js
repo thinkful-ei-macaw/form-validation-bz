@@ -10,6 +10,7 @@ import AddNote from '../AddNote/AddNote';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
+import ErrorBound from '../ErrorBound/ErrorBound'
 import { isThisISOWeek } from 'date-fns';
 
 class App extends Component {
@@ -103,19 +104,23 @@ class App extends Component {
             addFolder: this.handleAddFolder,
             addNote: this.handleAddNote,
             deleteNote: this.handleDeleteNote
-            
+
         };
         return (
             <ApiContext.Provider value={value}>
                 <div className="App">
-                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                    <ErrorBound>
+                        <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                    </ErrorBound>
                     <header className="App__header">
                         <h1>
                             <Link to="/">Noteful</Link>{' '}
                             <FontAwesomeIcon icon="check-double" />
                         </h1>
                     </header>
-                    <main className="App__main">{this.renderMainRoutes()}</main>
+                    <ErrorBound>
+                        <main className="App__main">{this.renderMainRoutes()}</main>
+                    </ErrorBound>
                 </div>
             </ApiContext.Provider>
         );

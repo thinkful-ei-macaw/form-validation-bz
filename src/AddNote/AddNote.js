@@ -3,6 +3,47 @@ import config from '../config';
 import ApiContext from '../ApiContext'
 
 class AddNote extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: {
+				value: ''
+			},
+			folderId: {
+				value: ''
+			},
+			content: {
+				value: ''
+			}
+		}
+	}
+	updateName(name) {
+		this.setState({ name: { value: name } });
+	}
+
+	updateFolderId(folderId) {
+		this.setState({ folderId: { value: folderId } });
+	}
+
+	updateContent(content) {
+		this.setState({ content: { value: content } });
+	}
+
+	validateName = () => {
+		let name = this.state.name.value;
+		name = name.replace(/[\s-]/g, '');
+		if (name.length === 0) {
+			return 'Name must contain atleast 1 character'
+		}
+	}
+
+	validateContent = () => {
+		let content = this.state.content.value;
+		content = content.replace(/[\s-]/g, '');
+		if (content.length === 0) {
+			return 'Content must contain atleast 1 character'
+		}
+	}
 
 	static defaultProps = {
 		onAddNote: () => { }
@@ -53,12 +94,14 @@ class AddNote extends Component {
 				<label htmlFor="add-note-form">Add New Note</label>
 				<form name="add-note-form" onSubmit={this.onAddNote}>
 					<label htmlFor="noteNameInput">Note Name: </label>
-					<input id="noteNameInput" name="noteNameInput" type="text" />
+					<input id="noteNameInput" name="noteNameInput" type="text" onChange={e => this.updateName(e.target.value)} />
 					<label htmlFor="folder">Folder: </label>
 					<select id="folder" name="folder">{options}</select>
 					<label htmlFor="NoteContent">Note Content: </label>
 					<input id="noteContent" name="NoteContent" type="text" />
-					<button type="submit" >Submit</button>
+					<button type="submit" disabled={
+						this.validateName()
+					} >Submit</button>
 				</form>
 			</div>
 		)

@@ -3,7 +3,6 @@ import config from '../config';
 import ApiContext from '../ApiContext'
 
 class AddFolder extends Component {
-
 	static defaultProps = {
 		onAddFolder: () => { }
 	}
