@@ -7,8 +7,8 @@ import config from '../config'
 import './Note.css'
 
 export default class Note extends React.Component {
-  static defaultProps ={
-    onDeleteNote: () => {},
+  static defaultProps = {
+    onDeleteNote: () => { },
   }
   static contextType = ApiContext;
 
@@ -31,6 +31,7 @@ export default class Note extends React.Component {
         this.context.deleteNote(noteId)
         // allow parent to perform extra behaviour
         this.props.onDeleteNote(noteId)
+        this.props.history.push('/')
       })
       .catch(error => {
         console.error({ error })

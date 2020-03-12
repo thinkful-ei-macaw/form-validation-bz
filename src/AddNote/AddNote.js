@@ -13,10 +13,11 @@ class AddNote extends Component {
 		e.preventDefault()
 		console.log(this.props)
 		// const folderId = this.props.id
-		const body = { 
-			name: e.target.noteInput.value,
-			folder: e.target.folder.value,
-			content: e.target.noteContent.value	
+		const body = {
+			name: e.target.noteNameInput.value,
+			folderId: e.target.folder.value,
+			modified: Date.now(),
+			content: e.target.noteContent.value
 		};
 		console.log(body);
 		fetch(`${config.API_ENDPOINT}/notes`, {
@@ -43,9 +44,9 @@ class AddNote extends Component {
 	}
 
 	render() {
-		let { folders=[] } = this.context;
+		let { folders = [] } = this.context;
 		let options = folders.map(folder => {
-			
+			return <option value={folder.id}>{folder.name}</option>
 		})
 		return (
 			<div>
@@ -54,7 +55,7 @@ class AddNote extends Component {
 					<label htmlFor="noteNameInput">Note Name: </label>
 					<input id="noteNameInput" name="noteNameInput" type="text" />
 					<label htmlFor="folder">Folder: </label>
-					<input id="folder" name="folder" type="text" />
+					<select id="folder" name="folder">{options}</select>
 					<label htmlFor="NoteContent">Note Content: </label>
 					<input id="noteContent" name="NoteContent" type="text" />
 					<button type="submit" >Submit</button>
