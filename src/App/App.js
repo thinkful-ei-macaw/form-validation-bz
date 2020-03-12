@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NoteListNav from '../NoteListNav/NoteListNav';
@@ -6,6 +6,7 @@ import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
+import AddNote from '../AddNote/AddNote';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
@@ -52,9 +53,16 @@ class App extends Component {
         });
     };
 
+    handleAddNote = note => {
+
+        this.setState({
+            notes: [...this.state.notes, note]
+        });
+    };
+
     renderNavRoutes() {
         return (
-            <>
+            <Fragment>
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -66,13 +74,13 @@ class App extends Component {
                 <Route path="/note/:noteId" component={NotePageNav} />
                 <Route path="/add-folder" component={NotePageNav} />
                 <Route path="/add-note" component={NotePageNav} />
-            </>
+            </Fragment>
         );
     }
 
     renderMainRoutes() {
         return (
-            <>
+            <Fragment>
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -83,7 +91,8 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" component={AddFolder} />
-            </>
+                <Route path="/add-note" component={AddNote} />
+            </Fragment>
         );
     }
 
@@ -92,8 +101,9 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             addFolder: this.handleAddFolder,
+            addNote: this.handleAddNote,
             deleteNote: this.handleDeleteNote
-
+            
         };
         return (
             <ApiContext.Provider value={value}>
