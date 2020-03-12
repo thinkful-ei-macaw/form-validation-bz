@@ -10,7 +10,7 @@ export default class NoteListNav extends React.Component {
   static contextType = ApiContext;
 
   render() {
-    const { folders=[], notes=[] } = this.context
+    const { folders = [], notes = [] } = this.context
     return (
       <div className='NoteListNav'>
         <ul className='NoteListNav__list'>
@@ -34,6 +34,10 @@ export default class NoteListNav extends React.Component {
             to='/add-folder'
             type='button'
             className='NoteListNav__add-folder-button'
+            onClick={e => {
+              e.preventDefault();
+
+            }}
           >
             <FontAwesomeIcon icon='plus' />
             <br />

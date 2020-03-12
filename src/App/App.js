@@ -1,19 +1,22 @@
-import React, {Component} from 'react';
-import {Route, Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
+import AddFolder from '../AddFolder/AddFolder';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
+import { isThisISOWeek } from 'date-fns';
 
 class App extends Component {
     state = {
         notes: [],
         folders: []
     };
+
 
     componentDidMount() {
         Promise.all([
@@ -29,10 +32,10 @@ class App extends Component {
                 return Promise.all([notesRes.json(), foldersRes.json()]);
             })
             .then(([notes, folders]) => {
-                this.setState({notes, folders});
+                this.setState({ notes, folders });
             })
             .catch(error => {
-                console.error({error});
+                console.error({ error });
             });
     }
 
@@ -41,6 +44,12 @@ class App extends Component {
             notes: this.state.notes.filter(note => note.id !== noteId)
         });
     };
+
+    /*handleAddFolder = folderId => {
+        this.setState({
+            folders: this.state.folders.push(folderId)
+        });
+    };*/
 
     renderNavRoutes() {
         return (
@@ -72,6 +81,7 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
+                <Route path="/add-folder" component={AddFolder} />
             </>
         );
     }
@@ -80,7 +90,8 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            addFolder: this.handleAddFolder
         };
         return (
             <ApiContext.Provider value={value}>
