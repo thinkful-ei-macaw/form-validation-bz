@@ -3,14 +3,18 @@ import config from '../config';
 import ApiContext from '../ApiContext'
 
 class AddFolder extends Component {
+
+	static defaultProps = {
+		onAddFolder: () => { }
+	}
 	static contextType = ApiContext;
 
 	onAddFolder = e => {
 		e.preventDefault()
-		const folderId = this.props.id
-		const body = e.target.submit.value;
-
-		fetch(`${config.API_ENDPOINT}/folder/${folderId}`, {
+		// const folderId = this.props.id
+		const body = { name: e.target.folderinput.value };
+		console.log(body);
+		fetch(`${config.API_ENDPOINT}/folders`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
@@ -22,10 +26,11 @@ class AddFolder extends Component {
 					return res.json().then(e => Promise.reject(e))
 				return res.json()
 			})
-			.then(() => {
-				this.context.addFolder()
+			.then((resJson) => {
+				//this.context.addFolder(folderId)
 				// allow parent to perform extra behaviour
-				this.props.onAddFolder(folderId)
+				this.context.addFolder(resJson)
+				this.props.history.push('/')
 			})
 			.catch(error => {
 				console.error({ error })
@@ -36,10 +41,10 @@ class AddFolder extends Component {
 		return (
 			<div>
 				<label htmlFor="add-folder-form">Add New Folder</label>
-				<form name="add-folder-form">
-					<label htmlFor="folder-name-input">Folder Name: </label>
-					<input id="folder-name-input" name="folder-name-input" type="text" />
-					<button type="submit" onClick={() => this.handleSubmit}>Submit</button>
+				<form name="add-folder-form" onSubmit={this.onAddFolder}>
+					<label htmlFor="folderinput">Folder Name: </label>
+					<input id="folderinput" name="folderinput" type="text" />
+					<button type="submit" >Submit</button>
 				</form>
 			</div>
 		)

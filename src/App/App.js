@@ -45,11 +45,12 @@ class App extends Component {
         });
     };
 
-    /*handleAddFolder = folderId => {
+    handleAddFolder = folder => {
+
         this.setState({
-            folders: this.state.folders.push(folderId)
+            folders: [...this.state.folders, folder]
         });
-    };*/
+    };
 
     renderNavRoutes() {
         return (
@@ -90,8 +91,9 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote,
-            addFolder: this.handleAddFolder
+            addFolder: this.handleAddFolder,
+            deleteNote: this.handleDeleteNote
+
         };
         return (
             <ApiContext.Provider value={value}>
