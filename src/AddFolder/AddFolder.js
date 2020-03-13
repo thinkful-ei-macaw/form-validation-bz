@@ -4,10 +4,31 @@ import ApiContext from '../ApiContext'
 import PropTypes from 'prop-types'
 
 class AddFolder extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: {
+				value: ''
+			}
+		};
+	}
+
 	static defaultProps = {
 		onAddFolder: () => { }
 	}
 	static contextType = ApiContext;
+
+	updateName(name) {
+		this.setState({ name: { value: name } });
+	}
+
+	validateName = () => {
+		let name = this.state.name.value;
+		name = name.replace(/[\s-]/g, '');
+		if (name.length === 0) {
+			return 'Name must contain atleast 1 character'
+		}
+	}
 
 	onAddFolder = e => {
 		e.preventDefault()
@@ -42,9 +63,10 @@ class AddFolder extends Component {
 			<div>
 				<label htmlFor="add-folder-form">Add New Folder</label>
 				<form name="add-folder-form" onSubmit={this.onAddFolder}>
-					<label htmlFor="folderinput">Folder Name: </label>
-					<input id="folderinput" name="folderinput" type="text" />
-					<button type="submit" >Submit</button>
+					<label htmlFor="folderinput">Folder Name: <div>{this.validateName()}</div> </label>
+					<input id="folderinput" name="folderinput" type="text" onChange={e => this.updateName(e.target.value)} />
+					<button type="submit" disabled={
+						this.validateName()} >Submit </button>
 				</form>
 			</div>
 		)
