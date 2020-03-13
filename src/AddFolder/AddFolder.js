@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import config from '../config';
 import ApiContext from '../ApiContext'
+import PropTypes from 'prop-types'
 
 class AddFolder extends Component {
 	static defaultProps = {
@@ -49,4 +50,11 @@ class AddFolder extends Component {
 		)
 	}
 }
+
+AddFolder.propTypes = {
+	onDeleteNote: PropTypes.func.isRequired,
+	history: PropTypes.object.isRequired
+
+}
+
 export default AddFolder;

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 
 
 export default class ErrorBound extends React.Component {
@@ -24,4 +24,8 @@ export default class ErrorBound extends React.Component {
         // Otherwise, render the children
         return this.props.children;
     }
+}
+
+ErrorBound.propTypes = {
+    children: PropTypes.object.isRequired
 }

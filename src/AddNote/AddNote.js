@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import config from '../config';
 import ApiContext from '../ApiContext'
+import PropTypes from 'prop-types'
 
 class AddNote extends Component {
 	constructor(props) {
@@ -107,4 +108,9 @@ class AddNote extends Component {
 		)
 	}
 }
+
+AddNote.propTypes = {
+	history: PropTypes.object.isRequired
+}
+
 export default AddNote;
