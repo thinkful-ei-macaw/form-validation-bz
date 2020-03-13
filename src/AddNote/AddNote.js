@@ -21,9 +21,9 @@ class AddNote extends Component {
 		this.setState({ name: { value: name } });
 	}
 
-	updateFolderId(folderId) {
-		this.setState({ folderId: { value: folderId } });
-	}
+	// updateFolderId(folderId) {
+	// 	this.setState({ folderId: { value: folderId } });
+	// }
 
 	updateContent(content) {
 		this.setState({ content: { value: content } });
@@ -93,11 +93,11 @@ class AddNote extends Component {
 			<div>
 				<label htmlFor="add-note-form">Add New Note</label>
 				<form name="add-note-form" onSubmit={this.onAddNote}>
-					<label htmlFor="noteNameInput">Note Name: </label>
+					<label htmlFor="noteNameInput">Note Name: <div>{this.validateName()}</div> </label>
 					<input id="noteNameInput" name="noteNameInput" type="text" onChange={e => this.updateName(e.target.value)} />
 					<label htmlFor="folder">Folder: </label>
 					<select id="folder" name="folder">{options}</select>
-					<label htmlFor="NoteContent">Note Content: </label>
+					<label htmlFor="NoteContent">Note Content: {this.validateContent()}</label>
 					<input id="noteContent" name="NoteContent" type="text" />
 					<button type="submit" disabled={
 						this.validateName()
