@@ -90,7 +90,8 @@ class AddNote extends Component {
 			return <option value={folder.id}>{folder.name}</option>
 		})
 		return (
-			<div>
+			<ApiContext.Consumer >
+			{context => (<div>
 				<label htmlFor="add-note-form">Add New Note</label>
 				<form name="add-note-form" onSubmit={this.onAddNote}>
 					<label htmlFor="noteNameInput">Note Name: </label>
@@ -103,7 +104,8 @@ class AddNote extends Component {
 						this.validateName()
 					} >Submit</button>
 				</form>
-			</div>
+			</div>)}
+			</ApiContext.Consumer>
 		)
 	}
 }

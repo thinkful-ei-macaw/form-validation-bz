@@ -7,7 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
-import ApiContext from '../ApiContext';
+import {ApiProvider} from '../ApiContext';
 import config from '../config';
 import './App.css';
 import ErrorBound from '../ErrorBound/ErrorBound'
@@ -41,25 +41,6 @@ class App extends Component {
             });
     }
 
-    handleDeleteNote = noteId => {
-        this.setState({
-            notes: this.state.notes.filter(note => note.id !== noteId)
-        });
-    };
-
-    handleAddFolder = folder => {
-
-        this.setState({
-            folders: [...this.state.folders, folder]
-        });
-    };
-
-    handleAddNote = note => {
-
-        this.setState({
-            notes: [...this.state.notes, note]
-        });
-    };
 
     renderNavRoutes() {
         return (
@@ -98,16 +79,9 @@ class App extends Component {
     }
 
     render() {
-        const value = {
-            notes: this.state.notes,
-            folders: this.state.folders,
-            addFolder: this.handleAddFolder,
-            addNote: this.handleAddNote,
-            deleteNote: this.handleDeleteNote
-
-        };
+        
         return (
-            <ApiContext.Provider value={value}>
+            <ApiProvider>
                 <div className="App">
                     <ErrorBound>
                         <nav className="App__nav">{this.renderNavRoutes()}</nav>
@@ -122,7 +96,7 @@ class App extends Component {
                         <main className="App__main">{this.renderMainRoutes()}</main>
                     </ErrorBound>
                 </div>
-            </ApiContext.Provider>
+            </ApiProvider>
         );
     }
 }
