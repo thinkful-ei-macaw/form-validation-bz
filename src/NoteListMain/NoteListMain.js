@@ -30,6 +30,7 @@ export default class NoteListMain extends React.Component {
                 name={note.name}
                 modified={note.modified}
                 history={this.props.history}
+                onDeleteNote={this.props.onDeleteNote}
               />
             </li>
           ))}
