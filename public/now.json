@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "alias": "bpetit940-noteful-app",
+  "name": "noteful-app",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -8,13 +8,13 @@ class AddFolder extends Component {
     super(props);
     this.state = {
       name: {
-        value: ""
-      }
+        value: "",
+      },
     };
   }
 
   static defaultProps = {
-    onAddFolder: () => {}
+    onAddFolder: () => {},
   };
   static contextType = ApiContext;
 
@@ -30,7 +30,7 @@ class AddFolder extends Component {
     }
   };
 
-  onAddFolder = e => {
+  onAddFolder = (e) => {
     e.preventDefault();
     // const folderId = this.props.id
     const body = { name: e.target.folderinput.value };
@@ -38,21 +38,21 @@ class AddFolder extends Component {
     fetch(`${config.API_ENDPOINT}/api/folders`, {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
-      .then(res => {
-        if (!res.ok) return res.json().then(e => Promise.reject(e));
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
       })
-      .then(resJson => {
+      .then((resJson) => {
         //this.context.addFolder(folderId)
         // allow parent to perform extra behaviour
         this.context.addFolder(resJson);
         this.props.history.push("/");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error({ error });
       });
   };
@@ -69,7 +69,7 @@ class AddFolder extends Component {
             id="folderinput"
             name="folderinput"
             type="text"
-            onChange={e => this.updateName(e.target.value)}
+            onChange={(e) => this.updateName(e.target.value)}
           />
           <button type="submit" disabled={this.validateName()}>
             Submit{" "}
@@ -81,7 +81,7 @@ class AddFolder extends Component {
 }
 
 AddFolder.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export default AddFolder;
