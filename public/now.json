@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "alias": "bpetit940-noteful-app",
+  "alias": "connor-noteful-app",
   "name": "noteful-app",
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
     },
     {
-      "src": "/.*",
+      "src": ".*",
       "dest": "/index.html"
     }
   ]
